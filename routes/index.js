@@ -20,7 +20,7 @@ router.post("/new", (req, res, next) => {
   console.log(url);
 
   const code = generateCode();
-  res.send("http://localhost:3000/" + code);
+  res.send(`${process.env.DOMAIN}${code}`);
 });
 
 module.exports = router;
