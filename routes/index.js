@@ -28,7 +28,7 @@ router.post("/new", async (req, res, next) => {
   });
 
   res.render("stats", result.dataValues);
-  res.send(`${process.env.DOMAIN}${code}`);
+  // res.send(`${process.env.DOMAIN}${code}`);  Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 });
 
 module.exports = router;
