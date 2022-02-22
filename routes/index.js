@@ -1,5 +1,7 @@
 var express = require("express");
+const { links } = require("express/lib/response");
 var router = express.Router();
+const Link = require("../models/link");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -15,11 +17,17 @@ function generateCode() {
   return text;
 }
 
-router.post("/new", (req, res, next) => {
+router.post("/new", async (req, res, next) => {
   const url = req.body.url;
   console.log(url);
-
   const code = generateCode();
+
+  const result = await Link.create({
+    url,
+    code,
+  });
+
+  res.render("stats", result.dataValues);
   res.send(`${process.env.DOMAIN}${code}`);
 });
 
