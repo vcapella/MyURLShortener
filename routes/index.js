@@ -3,6 +3,17 @@ const { links } = require("express/lib/response");
 var router = express.Router();
 const Link = require("../models/link");
 
+router.get("/:code", async (req, res, next) => {
+  const code = req.params.code;
+  const result = await Link.findOne({ where: { code } });
+  if (!result) return res.sendStatus(404);
+
+  result.hits++;
+  await result.save();
+
+  res.redirect(result.url);
+});
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Shortener" });
