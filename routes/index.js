@@ -1,7 +1,14 @@
 var express = require("express");
-const { links } = require("express/lib/response");
+// const { links } = require("express/lib/response");
 var router = express.Router();
 const Link = require("../models/link");
+
+router.get("/:code/stats", async (req, res, next) => {
+  const code = req.params.code;
+  const result = await Link.findOne({ where: { code } });
+  if (!result) return res.sendStatus(404);
+  res.render("stats", result.dataValues);
+});
 
 router.get("/:code", async (req, res, next) => {
   const code = req.params.code;
